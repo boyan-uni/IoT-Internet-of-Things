@@ -2,7 +2,6 @@ import json
 import pika
 import pandas as pd
 from paho.mqtt import client as mqtt_client
-from datetime import datetime
 
 # data collection
 data_collection = []
