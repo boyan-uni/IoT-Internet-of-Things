@@ -2,9 +2,12 @@ import requests
 import paho.mqtt.client as mqtt_client
 import json
 
-# url = "http://uoweb3.ncl.ac.uk/api/v1.1/sensors/PER_AIRMON_MONITOR1135100/data/json/?starttime=20230601&endtime=20230831"
+# task_1: data_injector_component
 
-def collect_data():
+
+
+def collect_raw_data():
+    # url = "http://uoweb3.ncl.ac.uk/api/v1.1/sensors/PER_AIRMON_MONITOR1135100/data/json/?starttime=20230601&endtime=20230831"
     url = "https://gist.githubusercontent.com/ringosham/fbd66654dc53c40bd4581d2828acc94e/raw/d56a0fcfd27ff7ea31e2aec3765eb2c5d64adb79/uo_data.min.json"
     resp = requests.get(url)
     raw_data_dict = resp.json()
@@ -28,14 +31,14 @@ def publish_mqtt(client, topic, msg):
 
 
 def main():
-    mqtt_ip = "localhost"
+    mqtt_ip = "192.168.0.102"
     mqtt_port = 1883
     topic = "CSC8112"
 
     client = mqtt_client.Client()
-    client.connect(mqtt_ip,mqtt_port)
+    client.connect(mqtt_ip, mqtt_port)
 
-    raw_data_dict = collect_data()
+    raw_data_dict = collect_raw_data()
     print(raw_data_dict)
     pm25_data = extract_pm25_data(raw_data_dict)
     print(pm25_data)
