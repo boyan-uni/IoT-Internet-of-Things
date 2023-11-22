@@ -9,6 +9,7 @@ rabbitmq_queue = "rabbitmq"
 rabbitmq_username = "guest"  
 rabbitmq_password = "guest" 
 
+
 def collect_data_from_rabbitmq():
     try:
         credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
@@ -18,21 +19,25 @@ def collect_data_from_rabbitmq():
 
         channel.queue_declare(queue=rabbitmq_queue)
 
-        print("Collecting Daily PM2.5 Data:")
+        data_list = []  # store data before sorting by timestamp
         for method_frame, properties, body in channel.consume(queue=rabbitmq_queue, auto_ack=True):
-            pm25_data = json.loads(body)
-            # print(f"Timestamp: {pm25_data['Timestamp']}, Value:{pm25_data['Average_Value']}")
-
-            timestamp_unix = int(pm25_data['Timestamp'])//1000
-
+            data_rmq = json.loads(body)
+            data_list.append(data_rmq)
+        # sort
+        data_list.sort(key=lambda x: x['Timestamp'])
+        #
+        print("Collecting Daily Average PM2.5 Data:")
+        for data_rmq in data_list:
+            timestamp_unix = int(data_rmq['Timestamp'])/1000
             timestamp = datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
-            print(f"Timestamp: {timestamp}, Value: {pm25_data['Average_Value']}")
+            print(f"Timestamp: {timestamp}, Value: {data_rmq['Average_Value']}")
 
         # close connection
         channel.cancel()
         connection.close()
     except Exception as e:
         print(f"Error Message: {e}")
+
 
 if __name__ == '__main__':
     collect_data_from_rabbitmq()
