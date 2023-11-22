@@ -24,21 +24,26 @@ def on_message(client, userdata, msg):
         if data['Value'] > 50:
             print(f"Outlier detected: {data}")  # print data > 50
         else:
-            data_collection.append(data)
-            if len(data_collection) >= 96:  # 24H / 15Min = 96
-                calculate_daily_average()
+            calculate_daily_average(data)
+
     except Exception as e:
         print(f"Error processing MQTT message: {e}")
 
 
-def calculate_daily_average():
+def calculate_daily_average(data):
     global data_collection
-    df = pd.DataFrame(data_collection)
-    average_value = df['Value'].mean()
-    timestamp = df['Timestamp'].iloc[0]
-    print(f"Daily average PM2.5 for {timestamp}: {average_value}")  # print daily average value
-    send_to_rabbitmq({'Timestamp': timestamp, 'Average_Value': average_value})
-    data_collection = []  # clear data_collection for next day
+    data_collection.append(data)
+
+    # sort by timestamp
+    data_collection.sort(key=lambda x: x['Timestamp'])
+
+    if len(data_collection) >= 96:  # 24H / 15Min = 96
+        df = pd.DataFrame(data_collection)
+        average_value = df['Value'].mean()
+        timestamp = df['Timestamp'].iloc[0]
+        print(f"Daily average PM2.5 for {timestamp}: {average_value}")  # print daily average value
+        send_to_rabbitmq({'Timestamp': timestamp, 'Average_Value': average_value})
+        data_collection = []  # clear data_collection for next day
 
 
 def send_to_rabbitmq(message):
