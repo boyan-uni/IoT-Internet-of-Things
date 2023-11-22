@@ -1,6 +1,10 @@
 import json
 import pika
+import pandas as pd
 from datetime import datetime
+import matplotlib.pyplot as plt
+from ml_engine import MLPredictor
+
 
 # RabbitMQ Setup
 rabbitmq_ip = "192.168.0.100"  
@@ -20,7 +24,7 @@ def collect_data_from_rabbitmq():
         channel.queue_declare(queue=rabbitmq_queue)
 
         data_list = []    # store data before sorting by timestamp
-        data_result = []  # store final data format
+        data_res = []  # store final data format
         
         print("Collecting Daily Average PM2.5 Data:")
         for method_frame, properties, body in channel.consume(queue=rabbitmq_queue, auto_ack=True):
@@ -30,12 +34,12 @@ def collect_data_from_rabbitmq():
             timestamp_unix = int(data_rmq['Timestamp'])//1000
             timestamp = datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
             print(f"Timestamp: {timestamp}, Value: {data_rmq['Average_Value']}")
-            data_result.append({'Timestamp': timestamp, 'Value': data_rmq['Average_Value']})
+            data_res.append({'Timestamp': timestamp, 'Value': data_rmq['Average_Value']})
             
         # close connection
         channel.cancel()
         connection.close()
-        return data_result
+        return data_res
     except Exception as e:
         print(f"Error Message: {e}")
 
@@ -70,7 +74,7 @@ def predict_pm25(data):
     # Do prediction
     forecast = predictor.predict()
 
-	# Get canvas
+    # Get canvas
     fig = predictor.plot_result(forecast)
     fig.savefig("prediction.png")
     fig.show()
@@ -104,7 +108,7 @@ if __name__ == '__main__':
     visualize_daily_average(data_result)
 
     # Predict PM2.5 using machine learning
-    # forecast_result = predict_pm25(data_result)
+    forecast_result = predict_pm25(data_result)
 
     # Visualize prediction results
-    # visualize_forecast(forecast_result)
+    visualize_forecast(forecast_result)
