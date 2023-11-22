@@ -21,18 +21,17 @@ def collect_data_from_rabbitmq():
         print("Collecting Daily PM2.5 Data:")
         for method_frame, properties, body in channel.consume(queue=rabbitmq_queue, auto_ack=True):
             pm25_data = json.loads(body)
-            # print(f"Timestamp: {pm25_data['Timestamp']}, Average PM2.5:{pm25_data['Average_PM25_data']}")
+            # print(f"Timestamp: {pm25_data['Timestamp']}, Value:{pm25_data['Average_PM25_data']}")
 
-            # Covert Timestamp to datetime format
-            timestamp = pm25_data['Timestamp']
-            formatted_timestamp = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
-            print(f"Timestamp: {formatted_timestamp}, Average PM2.5: {pm25_data['Average_PM25_data']}")
+            timestamp_unix = pm25_data['Timestamp']
+            timestamp = datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
+            print(f"Timestamp: {timestamp}, Value: {pm25_data['Average_PM25_data']}")
 
         # close connection
         channel.cancel()
         connection.close()
     except Exception as e:
-        print(f"Error collecting daily average PM2.5 data from RabbitMQ: {e}")
+        print(f"Error Message: {e}")
 
 if __name__ == '__main__':
     collect_data_from_rabbitmq()
