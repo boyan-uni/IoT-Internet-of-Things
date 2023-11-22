@@ -48,7 +48,7 @@ def send_to_rabbitmq(message):
     channel = connection.channel()
 
     channel.queue_declare(queue=rabbitmq_queue)
-    body = json.dumps(message).encode('uft-8')
+    body = json.dumps(message).encode('utf-8')
     channel.basic_publish(exchange='', routing_key=rabbitmq_queue, body=body)
     connection.close()
 
