@@ -56,8 +56,7 @@ def visualize_daily_average(data):
     plt.title('Daily Average PM2.5 Data')
     plt.xlabel('DateTime')
     plt.ylabel('Value')
-
-    plt.legend()
+    # plt.legend()
     plt.savefig('daily_average_pm25.png')
     plt.show()
 
@@ -93,8 +92,7 @@ def visualize_forecast(data):
     plt.title('PM2.5 Data Prediction')
     plt.xlabel('DateTime')
     plt.ylabel('Value')
-
-    plt.legend()
+    # plt.legend()
     plt.savefig('pm25_prediction.png')
     plt.show()
 
