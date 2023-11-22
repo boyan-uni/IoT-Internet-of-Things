@@ -37,7 +37,7 @@ def calculate_daily_average():
     average_value = df['Value'].mean()
     timestamp = df['Timestamp'].iloc[0]
     print(f"Daily average PM2.5 for {timestamp}: {average_value}")  # print daily average value
-    send_to_rabbitmq({'Timestamp': timestamp, 'Average_PM25_data': average_value})
+    send_to_rabbitmq({'Timestamp': timestamp, 'Average_Value': average_value})
     data_collection = []  # clear data_collection for next day
 
 
