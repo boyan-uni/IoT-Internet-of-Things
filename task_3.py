@@ -21,11 +21,12 @@ def collect_data_from_rabbitmq():
         print("Collecting Daily PM2.5 Data:")
         for method_frame, properties, body in channel.consume(queue=rabbitmq_queue, auto_ack=True):
             pm25_data = json.loads(body)
-            # print(f"Timestamp: {pm25_data['Timestamp']}, Value:{pm25_data['Average_PM25_data']}")
+            # print(f"Timestamp: {pm25_data['Timestamp']}, Value:{pm25_data['Average_Value']}")
 
-            timestamp_unix = pm25_data['Timestamp']
+            timestamp_unix = int(pm25_data['Timestamp'])//1000
+
             timestamp = datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
-            print(f"Timestamp: {timestamp}, Value: {pm25_data['Average_PM25_data']}")
+            print(f"Timestamp: {timestamp}, Value: {pm25_data['Average_Value']}")
 
         # close connection
         channel.cancel()
