@@ -43,19 +43,19 @@ def collect_data_from_rabbitmq():
         channel.cancel()
         connection.close()
 
-        data = {
+        data_re = {
             'Timestamp': timestamps,
             'Value': values
         }
 
-        return data
+        return data_re
     except Exception as e:
         print(f"Error Message: {e}")
 
 
 # Visualize daily average PM2.5 data
-def visualize_daily_average(data):
-    data_df = pd.DataFrame(data)
+def visualize_daily_average(data_daily):
+    data_df = pd.DataFrame(data_daily)
     
     # Initialize a canvas
     plt.figure(figsize=(8, 4), dpi=200)
@@ -71,9 +71,9 @@ def visualize_daily_average(data):
 
 
 # Predict PM2.5 using machine learning
-def predict_pm25(data):
+def predict_pm25(data_past):
     # 将数据转换为DataFrame
-    data_df = pd.DataFrame(data)
+    data_df = pd.DataFrame(data_past)
 
     # Create ML engine predictor object
     predictor = MLPredictor(data_df)
@@ -90,8 +90,8 @@ def predict_pm25(data):
 
 
 # Visualize prediction results
-def visualize_forecast(data):
-    data_df = pd.DataFrame(data)
+def visualize_forecast(data_forcast):
+    data_df = pd.DataFrame(data_forcast)
     
     # Initialize a canvas
     plt.figure(figsize=(8, 4), dpi=200)
