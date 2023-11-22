@@ -34,9 +34,6 @@ def calculate_daily_average(data):
     global data_collection
     data_collection.append(data)
 
-    # sort by timestamp
-    data_collection.sort(key=lambda x: x['Timestamp'])
-
     if len(data_collection) >= 96:  # 24H / 15Min = 96
         df = pd.DataFrame(data_collection)
         average_value = df['Value'].mean()
