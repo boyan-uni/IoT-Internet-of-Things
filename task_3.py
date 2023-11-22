@@ -23,23 +23,32 @@ def collect_data_from_rabbitmq():
         channel = connection.channel()
         channel.queue_declare(queue=rabbitmq_queue)
 
-        data_list = []    # store data before sorting by timestamp
-        data_res = []  # store final data format
-        
+        timestamps = []  # store timestamps
+        values = []  # store values
+
         print("Collecting Daily Average PM2.5 Data:")
         for method_frame, properties, body in channel.consume(queue=rabbitmq_queue, auto_ack=True):
             data_rmq = json.loads(body)
-            data_list.append(data_rmq)
 
-            timestamp_unix = int(data_rmq['Timestamp'])//1000
-            timestamp = datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
-            print(f"Timestamp: {timestamp}, Value: {data_rmq['Average_Value']}")
-            data_res.append({'Timestamp': timestamp, 'Value': data_rmq['Average_Value']})
-            
+            timestamp_unix = int(data_rmq['Timestamp']) // 1000
+            timestamp = datetime.utcfromtimestamp(timestamp_unix).strftime('%d/%m')
+            value = data_rmq['Average_Value']
+
+            timestamps.append(timestamp)
+            values.append(value)
+
+            print(f"Timestamp: {timestamp}, Value: {value}")
+
         # close connection
         channel.cancel()
         connection.close()
-        return data_res
+
+        data = {
+            'Timestamp': timestamps,
+            'Value': values
+        }
+
+        return data
     except Exception as e:
         print(f"Error Message: {e}")
 
@@ -100,13 +109,13 @@ def visualize_forecast(data):
 if __name__ == '__main__':
     
     # Collect data from RabbitMQ
-    data_result = collect_data_from_rabbitmq()
+    data = collect_data_from_rabbitmq()
 
     # Visualize daily average PM2.5 data
-    visualize_daily_average(data_result)
+    visualize_daily_average(data)
 
     # Predict PM2.5 using machine learning
-    forecast_result = predict_pm25(data_result)
+    forecast_result = predict_pm25(data)
 
     # Visualize prediction results
     visualize_forecast(forecast_result)
