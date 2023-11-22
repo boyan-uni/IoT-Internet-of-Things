@@ -19,16 +19,13 @@ def collect_data_from_rabbitmq():
 
         channel.queue_declare(queue=rabbitmq_queue)
 
+        print("Collecting Daily Average PM2.5 Data:")
         data_list = []  # store data before sorting by timestamp
         for method_frame, properties, body in channel.consume(queue=rabbitmq_queue, auto_ack=True):
             data_rmq = json.loads(body)
             data_list.append(data_rmq)
-        # sort
-        data_list.sort(key=lambda x: x['Timestamp'])
-        #
-        print("Collecting Daily Average PM2.5 Data:")
-        for data_rmq in data_list:
-            timestamp_unix = int(data_rmq['Timestamp'])/1000
+
+            timestamp_unix = int(data_rmq['Timestamp'])//1000
             timestamp = datetime.utcfromtimestamp(timestamp_unix).strftime('%Y-%m-%d %H:%M:%S')
             print(f"Timestamp: {timestamp}, Value: {data_rmq['Average_Value']}")
 
