@@ -26,10 +26,11 @@ if __name__ == '__main__':
         # 2. key: 'Timestamp' collected: str unix timestamp format
         timestamp_unix = int(average_data['Timestamp']) / 1000
         dt_obj = datetime.fromtimestamp(timestamp_unix)
-        timestamp = dt_obj.strftime('%Y-%m-%d 00:00:00')
-        Timestamp.append(timestamp)
+        Timestamp.append(dt_obj)  # 直接添加 DateTime 对象而不是字符串
 
-        print(f"Timestamp: {timestamp}, Value: {average_value}")
+        print(f"Timestamp: {dt_obj.strftime('%Y-%m-%d %H:%M:%S')}, Value: {average_value}")
+
+        # print(f"Timestamp: {timestamp}, Value: {average_value}")
 
         # 待处理的数据
         data = {
