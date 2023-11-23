@@ -16,16 +16,24 @@ if __name__ == '__main__':
     def callback(ch, method, properties, body):
         print(f"Collect message from rabbitmq: {json.loads(body)}")
         average_data = json.loads(body)
+
+        # 1.将Timestamp转换为datetime对象
+        formatted_Timestamp = datetime.fromtimestamp(int(average_data['Timestamp']) / 1000.0)
+        
         Timestamp = []
         Value = []
         for key, value in average_data.items():
             average_value = int(value)
             Value.append(average_value)
-            Timestamp.append(f"{key}")
+            # 2.改了这里
+            Timestamp.append(datetime.fromtimestamp(int(key) / 1000).strftime('%Y-%m-%d %H:%M:%S'))
+            # Timestamp.append(f"{key}")
+        
         data = {
             'Timestamp': Timestamp,
             'Value': Value
         }
+        
         data_df = pd.DataFrame(data)
         # Initialize a canvas
         plt.figure(figsize=(25, 10), dpi=300)
