@@ -5,7 +5,6 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from ml_engine import MLPredictor
 
-
 # RabbitMQ Setup
 rabbitmq_ip = "192.168.0.100"  
 rabbitmq_port = 5672
@@ -44,6 +43,10 @@ def main():
             'Value': values
         }
 
+        # close connection
+        channel.cancel()
+        connection.close()
+
         data_df = pd.DataFrame(data)
     
         # Initialize a canvas
@@ -54,16 +57,16 @@ def main():
         plt.title('Daily Average PM2.5 Data')
         plt.xlabel('DateTime')
         plt.ylabel('Value')
-        plt.savefig('daily_average_pm25.png')
-        plt.show()
+        plt.savefig('figure1.png')
+        # plt.show()
 
         # Format Timestamp to %Y-%m-%d e.g:"2020-09-01"
-        formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
+        formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in timestamps]
 
         # Prepare data
         data = {
             'Timestamp': formatted_Timestamp,
-            'Value': Value
+            'Value': values
         }
         data_df = pd.DataFrame(data)
 
@@ -78,11 +81,6 @@ def main():
         fig = predictor.plot_result(forecast)
         fig.savefig("prediction.png")
         fig.show()
-
-        
-        # close connection
-        channel.cancel()
-        connection.close()
 
     except Exception as e:
         print(f"Error Message: {e}")
