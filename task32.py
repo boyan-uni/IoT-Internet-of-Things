@@ -14,25 +14,22 @@ rabbitmq_password = "guest"
 if __name__ == '__main__':
 
     def callback(ch, method, properties, body):
-        # print(f"Collect message from rabbitmq: {json.loads(body)}")
         average_data = json.loads(body)
         
         Timestamp = []
         Value = []
 
-        for key, value in average_data.items():
-            # 1. value: 'Value'
-            average_value = average_data['Average_Value']
-            Value.append(average_value)
-            
-            # 2. key: 'Timestamp' collected: str unix timestamp format
-            # print(f"{average_data['Timestamp']}")
-            timestamp_unix = int(average_data['Timestamp']) / 1000
-            dt_obj = datetime.fromtimestamp(timestamp_unix)
-            timestamp = dt_obj.strftime('%Y-%m-%d 00:00:00')
-            Timestamp.append(timestamp)
+        # 1. value: 'Value'
+        average_value = average_data['Average_Value']
+        Value.append(average_value)
 
-            print(f"Timestamp: {timestamp}, Value: {average_value}")
+        # 2. key: 'Timestamp' collected: str unix timestamp format
+        timestamp_unix = int(average_data['Timestamp']) / 1000
+        dt_obj = datetime.fromtimestamp(timestamp_unix)
+        timestamp = dt_obj.strftime('%Y-%m-%d 00:00:00')
+        Timestamp.append(timestamp)
+
+        print(f"Timestamp: {timestamp}, Value: {average_value}")
 
         # 待处理的数据
         data = {
