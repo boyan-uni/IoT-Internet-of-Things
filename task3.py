@@ -18,7 +18,7 @@ def collect_data_from_rabbitmq():
     try:
         credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
         connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=rabbitmq_ip, port=rabbitmq_port, credentials=credentials))
+            pika.ConnectionParameters(host=rabbitmq_ip, port=rabbitmq_port, credentials=credentials, socket_timeout=60))
         channel = connection.channel()
         channel.queue_declare(queue=rabbitmq_queue)
 
@@ -26,8 +26,13 @@ def collect_data_from_rabbitmq():
         values = []  # store values
 
         print("Collecting Daily Average PM2.5 Data:")
+        message_count = 0
         for method_frame, properties, body in channel.consume(queue=rabbitmq_queue, auto_ack=True):
+
             data_rmq = json.loads(body)
+            message_count += 1
+            if message_count > 91:
+                break
 
             value = data_rmq['Average_Value']
             values.append(value)
@@ -36,7 +41,7 @@ def collect_data_from_rabbitmq():
             dt_obj = datetime.fromtimestamp(timestamp_unix)
             timestamps.append(dt_obj)  # 直接添加 DateTime 对象而不是字符串
 
-            print(f"Timestamp: {dt_obj.strftime('%Y-%m-%d %H:%M:%S')}, Value: {value}")
+            print(f"Timestamp: {dt_obj.strftime('%Y-%m-%d 00:00:00')}, Value: {value}")
 
         # close connection
         channel.cancel()
