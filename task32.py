@@ -16,24 +16,23 @@ if __name__ == '__main__':
     def callback(ch, method, properties, body):
         print(f"Collect message from rabbitmq: {json.loads(body)}")
         average_data = json.loads(body)
-
-        # 1.将Timestamp转换为datetime对象
-        formatted_Timestamp = datetime.fromtimestamp(int(average_data['Timestamp']) / 1000.0)
         
         Timestamp = []
         Value = []
         for key, value in average_data.items():
+            # 1. value: 'Value'
             average_value = int(value)
             Value.append(average_value)
-            # 2.改了这里
-            Timestamp.append(datetime.fromtimestamp(int(key) / 1000).strftime('%Y-%m-%d %H:%M:%S'))
-            # Timestamp.append(f"{key}")
-        
+            # 2. key: 'Timestamp' 格式 '%Y-%m-%d %H:%M:%S' 用于ML_Engine处理数据 后面的要不要看情况
+            Timestamp.append(datetime.fromtimestamp(int(key) / 1000).strftime('%Y-%m-%d'))
+
+        # 待处理的数据
         data = {
             'Timestamp': Timestamp,
             'Value': Value
         }
         
+        # 可视化
         data_df = pd.DataFrame(data)
         # Initialize a canvas
         plt.figure(figsize=(25, 10), dpi=300)
@@ -50,14 +49,16 @@ if __name__ == '__main__':
         plt.show()
 
         # Format Timestamp to %Y-%m-%d e.g:"2020-09-01"
-        formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
+        # formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
         # print(formatted_Timestamp)
 
         # Prepare data
-        data = {
-            'Timestamp': formatted_Timestamp,
-            'Value': Value
-        }
+        # data = {
+        #    'Timestamp': formatted_Timestamp,
+        #    'Value': Value
+        #}
+        
+        # 机器学习引擎
         data_df = pd.DataFrame(data)
 
         # Create ML engine predictor object
