@@ -62,7 +62,7 @@ if __name__ == '__main__':
         plt.show()
 
         # 预测
-        data_df = pd.DataFrame(data_past)
+        data_df = pd.DataFrame(data_re)
         # Create ML engine predictor object
         predictor = MLPredictor(data_df)
         # Train ML model
@@ -79,25 +79,3 @@ if __name__ == '__main__':
         print(f"Error Message: {e}")
     
 
-
-
-
-# Visualize prediction results
-def visualize_forecast(data_forcast):
-    data_df = pd.DataFrame(data_forcast)
-    
-    # Initialize a canvas
-    plt.figure(figsize=(8, 4), dpi=200)
-
-    # Plot data into canvas
-    plt.plot(data_df["Timestamp"], data_df["Value"], color="#FF3B1D", marker='.', linestyle="-")
-    plt.title('PM2.5 Data Prediction')
-    plt.xlabel('Date')
-    plt.ylabel('Value')
-    # plt.legend()
-    plt.savefig('pm25_prediction.png')
-    plt.show()
-
-
-
-    
