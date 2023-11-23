@@ -1,13 +1,14 @@
-from paho.mqtt import client as mqtt_client
-import pika
 import json
+import pika
 from datetime import datetime
+from paho.mqtt import client as mqtt_client
 
 if __name__ == '__main__':
+
+    # MQTT Setup
     mqtt_ip = "192.168.0.102"
     mqtt_port = 1883
     topic = "CSC8112"
-
 
     # Callback function for MQTT connection
     def on_connect(client, userdata, flags, rc):
@@ -20,11 +21,12 @@ if __name__ == '__main__':
 
     # Callback function will be triggered
     def on_message(client, userdata, msg):
-
         print(f"Get message from publisher {json.loads(msg.payload)}")
+
+        # Collect PM 2.5 data from MQTT
         pm25_data = json.loads(msg.payload)
-        # print all PM2.5 data
         print(pm25_data)
+
         # print PM2.5 data whose Value is greater than 50
         greater_key = []
         for key, value in pm25_data.items():
@@ -76,7 +78,6 @@ if __name__ == '__main__':
                               body=json.dumps(average_data))
 
         connection.close()
-
 
     # Create a mqtt client object
     client = mqtt_client.Client()
