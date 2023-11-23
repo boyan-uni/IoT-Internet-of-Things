@@ -63,7 +63,7 @@ def visualize_daily_average(data_daily):
     # Plot data into canvas
     plt.plot(data_df["Timestamp"], data_df["Value"], color="#FF3B1D", marker='.', linestyle="-")
     plt.title('Daily Average PM2.5 Data')
-    plt.xlabel('DateTime')
+    plt.xlabel('Date')
     plt.ylabel('Value')
     # plt.legend()
     plt.savefig('daily_average_pm25.png')
@@ -99,7 +99,7 @@ def visualize_forecast(data_forcast):
     # Plot data into canvas
     plt.plot(data_df["Timestamp"], data_df["Value"], color="#FF3B1D", marker='.', linestyle="-")
     plt.title('PM2.5 Data Prediction')
-    plt.xlabel('DateTime')
+    plt.xlabel('Date')
     plt.ylabel('Value')
     # plt.legend()
     plt.savefig('pm25_prediction.png')
