@@ -12,10 +12,10 @@ rabbitmq_queue = "rabbitmq"
 rabbitmq_username = "guest"  
 rabbitmq_password = "guest" 
 
+if __name__ == '__main__':
 
-# Collect data from RabbitMQ
-def main():
     try:
+        # Collect data from RabbitMQ
         credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=rabbitmq_ip, port=rabbitmq_port, credentials=credentials))
@@ -84,7 +84,3 @@ def main():
 
     except Exception as e:
         print(f"Error Message: {e}")
-
-
-if __name__ == '__main__':
-    main()
