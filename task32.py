@@ -5,14 +5,13 @@ import matplotlib.pyplot as plt
 from ml_engine import MLPredictor
 from datetime import datetime
 
+rabbitmq_ip = "192.168.0.100"  
+rabbitmq_port = 5672
+rabbitmq_queue = "rabbitmq"
+rabbitmq_username = "guest"  
+rabbitmq_password = "guest"
+
 if __name__ == '__main__':
-
-    rabbitmq_ip = "192.168.0.100"  
-    rabbitmq_port = 5672
-    rabbitmq_queue = "rabbitmq"
-    rabbitmq_username = "guest"  
-    rabbitmq_password = "guest"
-
 
     def callback(ch, method, properties, body):
         print(f"Collect message from rabbitmq: {json.loads(body)}")
@@ -24,17 +23,12 @@ if __name__ == '__main__':
             # 1. value: 'Value'
             average_value = int(value)
             Value.append(average_value)
+            
             # 2. key: 'Timestamp' collected: str unix timestamp format
-            timestamp_unix = int(average_data['Timestamp']) // 1000
+            timestamp_unix = int(key) // 1000
             dt_obj = datetime.fromtimestamp(timestamp_unix)
             timestamp = dt_obj.strftime('%Y-%m-%d 00:00:00')
             Timestamp.append(timestamp)
-            #
-            #unix_timestamp_str = key
-            #unix_timestamp = int(unix_timestamp_str)
-            #datetime_str = datetime.utcfromtimestamp(unix_timestamp).strftime('%Y-%m-%d %H:%M:%S')
-            #Timestamp.append(datetime_str)
-            #print(f"Timestamp: {datetime_str}, Value: {average_value}")
 
         # 待处理的数据
         data = {
@@ -47,7 +41,7 @@ if __name__ == '__main__':
         # Initialize a canvas
         plt.figure(figsize=(25, 10), dpi=300)
         # Plot data into canvas
-        plt.plot(data["Timestamp"], data["Value"], color="#FF3B1D", marker='.', linestyle="-")
+        plt.plot(data_df["Timestamp"], data_df["Value"], color="#FF3B1D", marker='.', linestyle="-")
         plt.title("Averaged PM2.5 sensor data in months")
         plt.xlabel("DateTime")
         plt.ylabel("Average Value")
