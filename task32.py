@@ -54,14 +54,15 @@ if __name__ == '__main__':
         plt.show()
 
         # Format Timestamp to %Y-%m-%d e.g:"2020-09-01"
-        formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
-        print(formatted_Timestamp)
+
+        # formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
+        # print(formatted_Timestamp)
 
         # Prepare data
-        data = {
-           'Timestamp': formatted_Timestamp,
-           'Value': Value
-        }
+        # data = {
+        #    'Timestamp': formatted_Timestamp,
+        #    'Value': Value
+        # }
         
         # 机器学习引擎
         data_df = pd.DataFrame(data)
