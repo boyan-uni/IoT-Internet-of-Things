@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 from ml_engine import MLPredictor
+from datetime import datetime
 
 if __name__ == '__main__':
 
@@ -23,9 +24,17 @@ if __name__ == '__main__':
             # 1. value: 'Value'
             average_value = int(value)
             Value.append(average_value)
-            # 2. key: 'Timestamp' 这里是str格式
-            timestamp = (int)key
-            Timestamp.append(f"{timestamp}")
+            # 2. key: 'Timestamp' collected: str unix timestamp format
+            timestamp_unix = int(average_data['Timestamp']) // 1000
+            dt_obj = datetime.fromtimestamp(timestamp_unix)
+            timestamp = dt_obj.strftime('%Y-%m-%d 00:00:00')
+            Timestamp.append(timestamp)
+            #
+            #unix_timestamp_str = key
+            #unix_timestamp = int(unix_timestamp_str)
+            #datetime_str = datetime.utcfromtimestamp(unix_timestamp).strftime('%Y-%m-%d %H:%M:%S')
+            #Timestamp.append(datetime_str)
+            #print(f"Timestamp: {datetime_str}, Value: {average_value}")
 
         # 待处理的数据
         data = {

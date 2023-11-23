@@ -30,10 +30,10 @@ def collect_data_from_rabbitmq():
         for method_frame, properties, body in channel.consume(queue=rabbitmq_queue, auto_ack=True):
             data_rmq = json.loads(body)
 
-            timestamp_unix = int(data_rmq['Timestamp']) // 1000
-            timestamp = datetime.utcfromtimestamp(timestamp_unix).strftime('%d/%m')
             value = data_rmq['Average_Value']
-
+            timestamp_unix = int(data_rmq['Timestamp']) // 1000
+            dt_obj = datetime.fromtimestamp(timestamp_unix)
+            timestamp = dt_obj.strftime('%Y-%m-%d 00:00:00')
             timestamps.append(timestamp)
             values.append(value)
 
@@ -43,12 +43,12 @@ def collect_data_from_rabbitmq():
         channel.cancel()
         connection.close()
 
-        data_re = {
+        data_res = {
             'Timestamp': timestamps,
             'Value': values
         }
 
-        return data_re
+        return data_res
     except Exception as e:
         print(f"Error Message: {e}")
 
