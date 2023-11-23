@@ -1,7 +1,5 @@
 /home/student/IdeaProjects/CSC8112-IoT/venv/bin/python /home/student/IdeaProjects/CSC8112-IoT/task32.py
-Timestamp: 2023-06-01 00:00:00, Value: 4.741614583333333
-/home/student/IdeaProjects/CSC8112-IoT/task32.py:54: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
-plt.show()
+Timestamp: 2023-06-01 00:00:00, Value: 5.166072916666667
 Traceback (most recent call last):
 File "/home/student/IdeaProjects/CSC8112-IoT/task32.py", line 94, in <module>
 channel.start_consuming()

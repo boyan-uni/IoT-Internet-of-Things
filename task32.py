@@ -51,18 +51,17 @@ if __name__ == '__main__':
         # Save as file
         plt.savefig("figure1.png")
         # Directly display
-        plt.show()
+        # plt.show()
 
         # Format Timestamp to %Y-%m-%d e.g:"2020-09-01"
-
-        # formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
+        formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
         # print(formatted_Timestamp)
 
         # Prepare data
-        # data = {
-        #    'Timestamp': formatted_Timestamp,
-        #    'Value': Value
-        # }
+        data = {
+           'Timestamp': formatted_Timestamp,
+           'Value': Value
+        }
         
         # 机器学习引擎
         data_df = pd.DataFrame(data)
@@ -77,7 +76,7 @@ if __name__ == '__main__':
         # Get canvas
         fig = predictor.plot_result(forecast)
         fig.savefig("prediction.png")
-        fig.show()
+        # fig.show()
 
 
     # Connect to RabbitMQ service

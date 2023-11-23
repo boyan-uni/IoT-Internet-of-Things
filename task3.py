@@ -5,7 +5,6 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from ml_engine import MLPredictor
 
-
 # RabbitMQ Setup
 rabbitmq_ip = "192.168.0.100"  
 rabbitmq_port = 5672
