@@ -4,8 +4,6 @@ import json
 
 # task_1: data_injector_component
 
-
-
 def collect_raw_data():
     # url = "http://uoweb3.ncl.ac.uk/api/v1.1/sensors/PER_AIRMON_MONITOR1135100/data/json/?starttime=20230601&endtime=20230831"
     url = "https://gist.githubusercontent.com/ringosham/fbd66654dc53c40bd4581d2828acc94e/raw/d56a0fcfd27ff7ea31e2aec3765eb2c5d64adb79/uo_data.min.json"
