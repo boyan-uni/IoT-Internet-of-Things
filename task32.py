@@ -23,9 +23,9 @@ if __name__ == '__main__':
             # 1. value: 'Value'
             average_value = int(value)
             Value.append(average_value)
-            # 2. key: 'Timestamp' 这里是str格式，应该转换成datetime格式
-            key = datetime.strptime(key, '%Y-%m-%d %H:%M:%S')
-            Timestamp.append(f"{key}")
+            # 2. key: 'Timestamp' 这里是str格式
+            timestamp = (int)key
+            Timestamp.append(f"{timestamp}")
 
         # 待处理的数据
         data = {
