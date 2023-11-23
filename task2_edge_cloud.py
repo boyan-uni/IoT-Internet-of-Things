@@ -14,7 +14,6 @@ if __name__ == '__main__':
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             print("Connected to MQTT OK!")
-
         else:
             print("Failed to connect, return code %d\n", rc)
 
@@ -23,11 +22,11 @@ if __name__ == '__main__':
     def on_message(client, userdata, msg):
         print(f"Get message from publisher {json.loads(msg.payload)}")
 
-        # Collect PM 2.5 data from MQTT
+        # Collect raw PM 2.5 data from MQTT
         pm25_data = json.loads(msg.payload)
         print(pm25_data)
 
-        # print PM2.5 data whose Value is greater than 50
+        # Filtering PM2.5 data outliers which value is greater than 50
         greater_key = []
         for key, value in pm25_data.items():
             if value > 50:
