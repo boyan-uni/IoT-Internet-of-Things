@@ -48,6 +48,9 @@ if __name__ == '__main__':
             'Value': values
         }
 
+
+
+
         # 可视化
         data_df = pd.DataFrame(data_re)
         # Initialize a canvas

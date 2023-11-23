@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from ml_engine import MLPredictor
 
 if __name__ == '__main__':
+
     rabbitmq_ip = "192.168.0.100"  
     rabbitmq_port = 5672
     rabbitmq_queue = "rabbitmq"
@@ -36,7 +37,7 @@ if __name__ == '__main__':
         # Rotate the scale label to display vertically
         plt.xticks(Timestamp, rotation='vertical')
         # Save as file
-        plt.savefig("figure2.png")
+        plt.savefig("figure1.png")
         # Directly display
         plt.show()
 
@@ -70,9 +71,9 @@ if __name__ == '__main__':
         pika.ConnectionParameters(host=rabbitmq_ip, port=rabbitmq_port, credentials=credentials))
     channel = connection.channel()
     # Declare a queue
-    channel.queue_declare(queue=rabbitmq_queque)
+    channel.queue_declare(queue=rabbitmq_queue)
 
-    channel.basic_consume(queue=rabbitmq_queque,
+    channel.basic_consume(queue=rabbitmq_queue,
                           auto_ack=True,
                           on_message_callback=callback)
 
