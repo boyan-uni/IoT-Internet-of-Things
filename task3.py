@@ -30,13 +30,13 @@ def collect_data_from_rabbitmq():
             data_rmq = json.loads(body)
 
             value = data_rmq['Average_Value']
-            timestamp_unix = int(data_rmq['Timestamp']) // 1000
-            dt_obj = datetime.fromtimestamp(timestamp_unix)
-            timestamp = dt_obj.strftime('%Y-%m-%d 00:00:00')
-            timestamps.append(timestamp)
             values.append(value)
 
-            print(f"Timestamp: {timestamp}, Value: {value}")
+            timestamp_unix = int(data_rmq['Timestamp']) / 1000
+            dt_obj = datetime.fromtimestamp(timestamp_unix)
+            timestamps.append(dt_obj)  # 直接添加 DateTime 对象而不是字符串
+
+            print(f"Timestamp: {dt_obj.strftime('%Y-%m-%d %H:%M:%S')}, Value: {value}")
 
         # close connection
         channel.cancel()
