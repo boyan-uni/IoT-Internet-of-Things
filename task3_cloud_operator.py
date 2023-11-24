@@ -7,7 +7,6 @@ from ml_engine import MLPredictor
 if __name__ == '__main__':
     rabbitmq_ip = "192.168.0.100"
     rabbitmq_port = 5672
-    # Queue name
     rabbitmq_queque = "CSC8112"
 
 
@@ -24,18 +23,21 @@ if __name__ == '__main__':
             'Timestamp': Timestamp,
             'Value': Value
         }
+        print(data)
+
+        # Visualization
         data_df = pd.DataFrame(data)
         # Initialize a canvas
-        plt.figure(figsize=(25, 10), dpi=300)
+        plt.figure(figsize=(8, 4), dpi=200)
         # Plot data into canvas
-        plt.plot(data["Timestamp"], data["Value"], color="#FF3B1D", marker='.', linestyle="-")
-        plt.title("Averaged PM2.5 sensor data in months")
+        plt.plot(data_df["Timestamp"], data_df["Value"], color="#FF3B1D", marker='.', linestyle="-")
+        plt.title("Averaged PM2.5 sensor data from 06/01 to 08/30 in Year 2023")
         plt.xlabel("DateTime")
-        plt.ylabel("Average Value")
+        plt.ylabel("Value")
         # Rotate the scale label to display vertically
         plt.xticks(Timestamp, rotation='vertical')
         # Save as file
-        plt.savefig("figure1.png")
+        plt.savefig("visualization.png")
         # Directly display
         plt.show()
 
