@@ -38,12 +38,10 @@ if __name__ == '__main__':
         plt.xticks(Timestamp, rotation='vertical')
         # Save as file
         plt.savefig("visualization.png")
-        # Directly display
-        plt.show()
 
         # Format Timestamp to %Y-%m-%d e.g:"2020-09-01"
         formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
-        # print(formatted_Timestamp)
+        print(formatted_Timestamp)
 
         # Prepare data
         data = {
@@ -62,7 +60,6 @@ if __name__ == '__main__':
         # Get canvas
         fig = predictor.plot_result(forecast)
         fig.savefig("prediction.png")
-        fig.show()
 
 
     # Connect to RabbitMQ service with timeout 1min
