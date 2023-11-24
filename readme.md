@@ -17,4 +17,4 @@ File "/home/student/IdeaProjects/CSC8112-IoT/task3_cloud_operator.py", line 43, 
 formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
 AttributeError: 'str' object has no attribute 'strftime'
 
-Process finished with exit cod
+Process finished with exit code1

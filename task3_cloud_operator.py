@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pika
 import json
 import pandas as pd
@@ -61,6 +63,7 @@ if __name__ == '__main__':
         # Get canvas
         fig = predictor.plot_result(forecast)
         fig.savefig("prediction.png")
+        fig.show()
 
 
     # Connect to RabbitMQ service with timeout 1min
