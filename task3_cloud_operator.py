@@ -40,7 +40,8 @@ if __name__ == '__main__':
         plt.savefig("visualization.png")
 
         # Format Timestamp to %Y-%m-%d e.g:"2020-09-01"
-        formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
+        # formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
+        formatted_Timestamp = [datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') for timestamp in Timestamp]
         print(formatted_Timestamp)
 
         # Prepare data
