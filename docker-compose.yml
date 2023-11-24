@@ -4,9 +4,13 @@
 version: '3'
 services:
   task2_edge_cloud:
-    # Build from the Dockerfile in the current directory
+    # build from the Dockerfile in the current directory
     build: .
     # log show in terminal
     tty: true
+    # when "docker-compose up" the service runs automatically
+    command: run
     volumes:
       - .:/usr/src/app
+
+ # Also after modified the source .py, use "docker-compose up" instead of build again.
