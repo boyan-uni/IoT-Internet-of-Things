@@ -9,7 +9,7 @@ services:
     # log show in terminal
     tty: true
     # when "docker-compose up" the service runs automatically
-    command: run
+    command: /usr/src/app/run
     volumes:
       - .:/usr/src/app
 
