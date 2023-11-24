@@ -14,7 +14,7 @@ if __name__ == '__main__':
             print("Failed to connect, return code %d\n", rc)
 
 
-    # Collect raw data from Urban Observatory (IoT Layer)
+    # Collect raw data from Urban Observatory (IoT Layer Back up url)
     url = "https://gist.githubusercontent.com/ringosham/fbd66654dc53c40bd4581d2828acc94e/raw/d56a0fcfd27ff7ea31e2aec3765eb2c5d64adb79/uo_data.min.json"
     response = requests.get(url)
     raw_data_dict = json.loads(response.text)

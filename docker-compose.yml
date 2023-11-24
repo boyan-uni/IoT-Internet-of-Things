@@ -3,4 +3,4 @@
 version: '3'
 services:
   task2_edge_cloud:
-    image: task2_edge_cloud:latest
+    image: urbanairmonitor_task2_edge_cloud:latest
