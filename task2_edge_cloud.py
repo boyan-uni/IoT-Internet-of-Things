@@ -26,38 +26,32 @@ if __name__ == '__main__':
         pm25_data = json.loads(msg.payload)
         print(pm25_data)
 
-        # Filtering PM2.5 data outliers which value is greater than 50
+        # Collect and Filter PM2.5 data outliers (>50)
         pm25_outliers = []
         for key, value in pm25_data.items():
             if value > 50:
                 pm25_outliers.append(key)
                 print(f"Timestamp: {key}, Value: {value}")
-        # Not only print but filter! To separate in different data sets
         for key in pm25_outliers:
-            pm25_data.pop(key)
+            pm25_data.pop(key)  # Filter the outliers!
 
-        # Collect the valid daily PM2.5 data
+        # Collect valid daily data
         daily_data = {}
         for key, value in pm25_data.items():  # Outliers already filtered.
             key = datetime.strptime(key, '%Y-%m-%d %H:%M:%S')
             # Converts the timestamp to a date object, extracting only the date part(year, month, and day).
             date = key.date()
-            # print(item['Timestamp'])
             if date not in daily_data:
                 daily_data[date] = {'Timestamp': key, 'Value': [], 'Average': None}
             daily_data[date]['Value'].append(value)
-            # print(daily_data)
+
         # Calculate the daily average and use the first datetime of each day as the new timestamp
         average_data = {}
         for date, day_data in daily_data.items():
             day_data['Average_Value'] = sum(day_data['Value']) / len(day_data['Value'])
             day_data['Timestamp'] = datetime(date.year, date.month, date.day)
             average_data[f"{day_data['Timestamp']}"] = day_data['Average_Value']
-            # print(day_data['Timestamp'])
-            # Print new time stamps and averages for each day
-            average_pm25 = f"date:{day_data['Timestamp']} 24h average:{day_data['Average_Value']:.3f}"
-            print(average_pm25)
-
+            print(f"date:{day_data['Timestamp']} 24h average:{day_data['Average_Value']:.3f}")
 
         # RabbitMQ (Producer)
         rabbitmq_ip = "192.168.0.100"
@@ -74,7 +68,6 @@ if __name__ == '__main__':
                               routing_key=rabbitmq_queque,
                               body=json.dumps(average_data))
         connection.close()
-
 
     # MQTT (Subscriber)
     # Create a mqtt client object
