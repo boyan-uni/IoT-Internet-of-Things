@@ -1,16 +1,6 @@
 
 # Define a service named task2_edge_cloud
-
 version: '3'
 services:
   task2_edge_cloud:
-    # build from the Dockerfile in the current directory
-    build: .
-    # log show in terminal
-    tty: true
-    # when "docker-compose up" the service runs automatically
-    command: /usr/src/app/run
-    volumes:
-      - .:/usr/src/app
-
- # Also after modified the source .py, use "docker-compose up" instead of build again.
+    image: task2_edge_cloud:latest
