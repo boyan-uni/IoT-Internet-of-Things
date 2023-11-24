@@ -41,8 +41,7 @@ if __name__ == '__main__':
         # Save as file
         plt.savefig("visualization.png")
 
-        # Format Timestamp to %Y-%m-%d e.g:"2020-09-01"
-        # formatted_Timestamp = [timestamp.strftime('%Y-%m-%d') for timestamp in Timestamp]
+        # Format Timestamp to %Y-%m-%d
         formatted_Timestamp = [datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') for timestamp in Timestamp]
         print(formatted_Timestamp)
 
@@ -66,11 +65,10 @@ if __name__ == '__main__':
         fig.show()
 
 
-    # Connect to RabbitMQ service with timeout 1min
+    # Connect to RabbitMQ service
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host=rabbitmq_ip, port=rabbitmq_port, socket_timeout=60))
     channel = connection.channel()
-    # Declare a queue
     channel.queue_declare(queue=rabbitmq_queque)
 
     channel.basic_consume(queue=rabbitmq_queque,
