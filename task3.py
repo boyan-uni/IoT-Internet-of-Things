@@ -31,7 +31,7 @@ def collect_data_from_rabbitmq():
 
             data_rmq = json.loads(body)
             message_count += 1
-            if message_count > 91:
+            if message_count > 90:
                 break
 
             value = data_rmq['Average_Value']

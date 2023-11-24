@@ -5,12 +5,9 @@ import pika
 rabbitmq_ip = "192.168.0.100" # cloud vm ip address
 rabbitmq_port = 5672
 rabbitmq_queue = "rabbitmq"
-rabbitmq_username = "guest"  # default username
-rabbitmq_password = "guest"  # default password
 
-credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
-parameters = pika.ConnectionParameters(host=rabbitmq_ip, port=rabbitmq_port, credentials=credentials)
-
+# No need to set default username and password
+parameters = pika.ConnectionParameters(host=rabbitmq_ip, port=rabbitmq_port, socket_timeout=60)
 try:
     connection = pika.BlockingConnection(parameters)
     print("Connection Successful")

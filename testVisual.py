@@ -19,6 +19,6 @@ if __name__ == '__main__':
     plt.ylabel("Value")
 
     # Save as file
-    plt.savefig("figure1.png")
+    plt.savefig("testFigure.png")
     # Directly display
     plt.show()
