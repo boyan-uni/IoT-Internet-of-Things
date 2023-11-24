@@ -1,7 +1,3 @@
-# FROM ubuntu:latest
-# LABEL authors="student"
-# ENTRYPOINT ["top", "-b"]
-
 # Use an official Python runtime as a parent image
 FROM python:3.8-slim
 
