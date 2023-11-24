@@ -1,21 +1,12 @@
 
-# Define a service named task_2
-#
+# Define a service named task2_edge_cloud
+
 version: '3'
 services:
-  task_2:
+  task2_edge_cloud:
     # Build from the Dockerfile in the current directory
     build: .
-    environment:
-      - MQTT_IP=192.168.0.102
-      - MQTT_PORT=1883
-      - MQTT_USERNAME=admin
-      - MQTT_PASSWORD=public
-      - RABBITMQ_IP=192.168.0.100
-      - RABBITMQ_PORT=5672
-      - RABBITMQ_QUEUE=rabbitmq
-      - RABBITMQ_USERNAME=guest
-      - RABBITMQ_PASSWORD=guest
-    tty: true # log show in terminal
+    # log show in terminal
+    tty: true
     volumes:
       - .:/usr/src/app

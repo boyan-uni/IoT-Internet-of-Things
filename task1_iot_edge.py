@@ -17,7 +17,6 @@ if __name__ == '__main__':
     # Collect raw data from Urban Observatory (IoT Layer)
     url = "https://gist.githubusercontent.com/ringosham/fbd66654dc53c40bd4581d2828acc94e/raw/d56a0fcfd27ff7ea31e2aec3765eb2c5d64adb79/uo_data.min.json"
     response = requests.get(url)
-    # Transform format from json to dictionary
     raw_data_dict = json.loads(response.text)
     print(raw_data_dict)
 
@@ -31,7 +30,7 @@ if __name__ == '__main__':
             pm25_data[timestamp] = value
     print(pm25_data)
 
-    # MQTT setup
+    # MQTT (Publisher)
     mqtt_ip = "192.168.0.102"  # edge vm ip address
     mqtt_port = 1883
     topic = "CSC8112"

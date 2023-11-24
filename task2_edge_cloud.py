@@ -27,20 +27,18 @@ if __name__ == '__main__':
         print(pm25_data)
 
         # Filtering PM2.5 data outliers which value is greater than 50
-        greater_key = []
+        pm25_outliers = []
         for key, value in pm25_data.items():
             if value > 50:
-                greater_key.append(key)
+                pm25_outliers.append(key)
                 print(f"Timestamp: {key}, Value: {value}")
-        for key in greater_key:
+        # Not only print but filter! To separate in different data sets
+        for key in pm25_outliers:
             pm25_data.pop(key)
 
-        # Average the value every 24 hours and print it to the console
-        # Initializes the dictionary to store daily data
+        # Collect the valid daily PM2.5 data
         daily_data = {}
-
-        # Iterate over the data and group it into daily chunks
-        for key, value in pm25_data.items():
+        for key, value in pm25_data.items():  # Outliers already filtered.
             key = datetime.strptime(key, '%Y-%m-%d %H:%M:%S')
             # Converts the timestamp to a date object, extracting only the date part(year, month, and day).
             date = key.date()
@@ -60,6 +58,8 @@ if __name__ == '__main__':
             average_pm25 = f"date:{day_data['Timestamp']} 24h average:{day_data['Average_Value']:.3f}"
             print(average_pm25)
 
+
+        # RabbitMQ (Producer)
         rabbitmq_ip = "192.168.0.100"
         rabbitmq_port = 5672
         # Queue name
@@ -67,17 +67,16 @@ if __name__ == '__main__':
         # Connect to RabbitMQ service
         connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_ip, port=rabbitmq_port))
         channel = connection.channel()
-
         # Declare a queue
         channel.queue_declare(queue=rabbitmq_queque)
-
         # Produce message
         channel.basic_publish(exchange='',
                               routing_key=rabbitmq_queque,
                               body=json.dumps(average_data))
-
         connection.close()
 
+
+    # MQTT (Subscriber)
     # Create a mqtt client object
     client = mqtt_client.Client()
     # Callback function for MQTT connection
