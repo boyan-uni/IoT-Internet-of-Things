@@ -1,5 +1,7 @@
-# Internet of Things - 基于云计算的物联网数据处理与预测系统 - 中英版项目介绍
-Link to [CSC8112 Report1 Boyan Li (IoT).pdf](https://github.com/boyan-uni/IoT-Internet-of-Things/blob/master/CSC8112%20Report1%20Boyan%20Li%20(IoT).pdf)
+# Internet of Things - 基于云计算的物联网数据处理与预测系统 
+
+- README.md：中英版项目介绍
+- Link to [CSC8112 Report1 Boyan Li (IoT).pdf](https://github.com/boyan-uni/IoT-Internet-of-Things/blob/master/CSC8112%20Report1%20Boyan%20Li%20(IoT).pdf)
 
 ## Introduction in English
 
