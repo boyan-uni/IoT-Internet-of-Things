@@ -7,7 +7,7 @@
 
 ### Project Description
 
-- **Project Name**: Cloud-Based IoT Data Processing and Prediction System
+- **Project Name**: **Cloud-Based IoT Data Processing and Prediction System**
 
 - **Project Overview**: This project aims to develop a cloud-based Internet of Things (IoT) data processing and prediction system. The system continuously collects, processes, and predicts air quality data (specifically PM2.5) from a city observation platform. The project involves tasks such as data collection, preprocessing, time-series data prediction, and visualization. The entire process is deployed and managed using Docker container technology on the Azure cloud platform.
 
@@ -43,7 +43,7 @@
 
 ### 项目描述
 
-- 项目名称: 基于云计算的物联网数据处理与预测系统
+- 项目名称: **基于云计算的物联网数据处理与预测系统**
 
 - 项目概述: 该项目旨在开发一个基于云计算的物联网（IoT）数据处理与预测系统，系统通过持续收集、处理和预测来自城市观测平台的空气质量数据（主要是PM2.5）。项目涉及数据采集、预处理、时序数据预测与可视化等任务，整个流程在 Azure 云平台上使用 Docker 容器技术进行部署与管理。
 
